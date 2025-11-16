@@ -127,6 +127,10 @@ export const IniciarSesion = () => {
                                 Regístrate
                             </button>
                         </Link>
+                        {' '}o{' '}
+                        <button onClick={handleSubmit} className="text-red-500 hover:text-red-400 font-semibold transition-colors">
+                            entrar como invitado
+                        </button>
                     </p>
 
                 </div>
