@@ -38,21 +38,9 @@ export const DetallePelicula = () => {
     }
 
     const sedes = [
-        {
-            id: 1,
-            nombre: "Sede Lima Centro",
-            horarios: ["11:30", "13:45", "16:00", "19:30"]
-        },
-        {
-            id: 2,
-            nombre: "Sede La Molina",
-            horarios: ["13:00", "18:45", "20:00"]
-        },
-        {
-            id: 3,
-            nombre: "Sede Mall del Sur",
-            horarios: ["20:30", "23:00"]
-        }
+        { id: 1, nombre: "Sede Lima Centro", horarios: ["11:30", "13:45", "16:00", "19:30"] },
+        { id: 2, nombre: "Sede La Molina", horarios: ["13:00", "18:45", "20:00"] },
+        { id: 3, nombre: "Sede Mall del Sur", horarios: ["20:30", "23:00"] }
     ];
 
     const resenas = [
@@ -61,70 +49,63 @@ export const DetallePelicula = () => {
             usuario: "Carlos Mendoza",
             rating: 5,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=1",
-            texto: "Nunca pensé que saldría del cine con el corazón latiendo a mil por hora, los ojos brillosos y una sonrisa tonta en la cara… pero así me dejó esta película."
+            texto: "Nunca pensé que saldría del cine con el corazón latiendo a mil por hora..."
         },
         {
             id: 2,
             usuario: "María García",
             rating: 4,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=2",
-            texto: "Una versión diferente a lo que esperaba, pero con mucho corazón y momentos memorables."
+            texto: "Una versión diferente a lo que esperaba, pero con mucho corazón..."
         },
         {
             id: 3,
             usuario: "Roberto Silva",
             rating: 5,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=3",
-            texto: "El desarrollo de los personajes y el ritmo de la historia están muy bien logrados. Recomendadísima."
+            texto: "El desarrollo de los personajes y el ritmo están muy bien logrados..."
         },
         {
             id: 4,
             usuario: "Ana Torres",
             rating: 5,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=4",
-            texto: "Una película que logra capturar la esencia del género de una forma fresca y emocionante."
+            texto: "Captura la esencia del género de forma fresca y emocionante."
         },
         {
             id: 5,
             usuario: "Luis Ramírez",
             rating: 4,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=5",
-            texto: "Entretenida, visualmente atractiva y con momentos muy emotivos. Vale la pena verla en el cine."
+            texto: "Entretenida, atractiva y con momentos emotivos."
         },
         {
             id: 6,
             usuario: "Patricia Flores",
             rating: 5,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=6",
-            texto: "Tiene escenas que se quedan contigo después de salir de la sala. Una gran experiencia."
+            texto: "Escenas memorables que se quedan contigo."
         },
         {
             id: 7,
             usuario: "Diego Castro",
             rating: 3,
             avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=7",
-            texto: "Buena película, aunque algunos momentos se sienten un poco apresurados. Aun así, disfrutable."
+            texto: "Buena, aunque algo apresurada en partes."
         }
     ];
 
-    const renderStars = (rating) => {
-        return (
-            <div className="flex gap-1">
-                {[...Array(5)].map((_, index) => (
-                    <Star
-                        key={index}
-                        className={`w-4 h-4 ${
-                            index < rating 
-                                ? 'fill-[#FF9500] text-[#FF9500]' 
-                                : 'fill-gray-400 text-gray-400'
-                        }`}
-                    />
-                ))}
-            </div>
-        );
-    };
+    const renderStars = (rating) => (
+        <div className="flex gap-1">
+            {[...Array(5)].map((_, index) => (
+                <Star
+                    key={index}
+                    className={`w-4 h-4 ${index < rating ? 'fill-[#FF9500] text-[#FF9500]' : 'fill-gray-400 text-gray-400'}`}
+                />
+            ))}
+        </div>
+    );
 
-    // Fallbacks por si alguna peli no tiene todos los campos
     const poster = pelicula.imagenPoster || pelicula.imagen;
     const trailerImg = pelicula.imagenTrailer || pelicula.imagenPoster || pelicula.imagen;
     const titulo = pelicula.titulo || 'Película';
@@ -136,9 +117,8 @@ export const DetallePelicula = () => {
     const director = pelicula.director || 'Por definir';
     const reparto = pelicula.reparto || 'Por definir';
     const textoTrailer = pelicula.trailer || 'TRÁILER OFICIAL';
-    const trailerUrl = pelicula.trailerUrl || ''; // URL del video de YouTube
+    const trailerUrl = pelicula.trailerUrl || '';
 
-    // Función para extraer el ID del video de YouTube
     const getYouTubeVideoId = (url) => {
         if (!url) return null;
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -151,21 +131,27 @@ export const DetallePelicula = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pb-16">
             <Header />
+
+            {/* BOTÓN VOLVER*/}
+            <div className="flex justify-end mt-6 px-4 sm:px-6 lg:px-8">
+                <button
+                    onClick={() => navigate('/menuPrincipal')}
+                    className="px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-full 
+                               transition-all duration-300 shadow-lg hover:scale-105"
+                >
+                    Volver a Cartelera
+                </button>
+            </div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Columna Izquierda - Poster y Reseñas */}
+
+                    {/* Columna Izquierda */}
                     <div className="lg:col-span-1 space-y-6 order-1">
-                        {/* Poster */}
                         <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700/50">
-                            <img
-                                src={poster}
-                                alt={titulo}
-                                className="w-full h-[600px] object-cover"
-                            />
+                            <img src={poster} alt={titulo} className="w-full h-[600px] object-cover" />
                             <div className="p-6 text-center">
-                                <h2 className="text-2xl font-bold text-white mb-2">
-                                    {titulo}
-                                </h2>
+                                <h2 className="text-2xl font-bold text-white mb-2">{titulo}</h2>
                                 <p className="text-gray-300 mb-4">
                                     {genero}{duracion && `, ${duracion}`}{clasificacion && `, ${clasificacion}`}
                                 </p>
@@ -173,37 +159,27 @@ export const DetallePelicula = () => {
                             </div>
                         </div>
 
-                        {/* Reseñas debajo del poster - Solo desktop */}
+                        {/* Reseñas desktop */}
                         <div className="space-y-4 hidden lg:block">
                             {resenas.slice(0, 3).map((resena) => (
-                                <div
-                                    key={resena.id}
-                                    className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-5 border border-slate-700/50"
-                                >
+                                <div key={resena.id} className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-5 border border-slate-700/50">
                                     <div className="flex items-start gap-3 mb-3">
                                         <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-600 flex-shrink-0">
-                                            <img
-                                                src={resena.avatar}
-                                                alt={resena.usuario}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            <img src={resena.avatar} alt={resena.usuario} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1">
                                             <p className="text-white font-bold text-sm mb-1">{resena.usuario}</p>
                                             {renderStars(resena.rating)}
                                         </div>
                                     </div>
-                                    <p className="text-gray-300 text-sm leading-relaxed">
-                                        {resena.texto}
-                                    </p>
+                                    <p className="text-gray-300 text-sm">{resena.texto}</p>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Botón Reseñas - desktop */}
-                        <button 
+                        <button
                             onClick={() => setShowAllReviews(true)}
-                            className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-full transition-all duration-300 shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 transform hover:scale-105 text-xl hidden lg:block"
+                            className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-full transition-all duration-300 shadow-lg hover:scale-105 text-xl hidden lg:block"
                         >
                             Leer más reseñas
                         </button>
@@ -211,40 +187,27 @@ export const DetallePelicula = () => {
 
                     {/* Columna Derecha */}
                     <div className="lg:col-span-2 space-y-6 order-2">
-                        {/* Trailer - desktop */}
+
+                        {/* Trailer desktop */}
                         <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700/50 hidden lg:block">
-                            <div 
-                                className="relative group cursor-pointer"
-                                onClick={() => videoId && setShowTrailer(true)}
-                            >
-                                <img
-                                    src={trailerImg}
-                                    alt="Trailer"
-                                    className="w-full h-[400px] object-cover"
-                                />
+                            <div className="relative group cursor-pointer" onClick={() => videoId && setShowTrailer(true)}>
+                                <img src={trailerImg} alt="Trailer" className="w-full h-[400px] object-cover" />
                                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                                     <div className="text-center">
                                         <div className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                                             <Play className="w-10 h-10 text-white fill-white ml-1" />
                                         </div>
-                                        <h3 className="text-white text-2xl font-bold">
-                                            {textoTrailer}
-                                        </h3>
+                                        <h3 className="text-white text-2xl font-bold">{textoTrailer}</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Horarios por sede */}
+                        {/* Horarios */}
                         <div className="space-y-4">
                             {sedes.map((sede) => (
-                                <div
-                                    key={sede.id}
-                                    className="bg-gradient-to-r from-slate-700/30 to-slate-800/30 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/50"
-                                >
-                                    <h3 className="text-white text-xl font-bold mb-4">
-                                        {sede.nombre}
-                                    </h3>
+                                <div key={sede.id} className="bg-gradient-to-r from-slate-700/30 to-slate-800/30 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/50">
+                                    <h3 className="text-white text-xl font-bold mb-4">{sede.nombre}</h3>
                                     <div className="flex flex-wrap gap-3">
                                         {sede.horarios.map((horario, index) => (
                                             <button
@@ -259,25 +222,16 @@ export const DetallePelicula = () => {
                             ))}
                         </div>
 
-                        {/* Trailer - móvil */}
+                        {/* Trailer móvil */}
                         <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl overflow-hidden border border-slate-700/50 lg:hidden">
-                            <div 
-                                className="relative group cursor-pointer"
-                                onClick={() => videoId && setShowTrailer(true)}
-                            >
-                                <img
-                                    src={trailerImg}
-                                    alt="Trailer"
-                                    className="w-full h-[400px] object-cover"
-                                />
+                            <div className="relative group cursor-pointer" onClick={() => videoId && setShowTrailer(true)}>
+                                <img src={trailerImg} alt="Trailer" className="w-full h-[400px] object-cover" />
                                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                                     <div className="text-center">
                                         <div className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                                             <Play className="w-10 h-10 text-white fill-white ml-1" />
                                         </div>
-                                        <h3 className="text-white text-2xl font-bold">
-                                            {textoTrailer}
-                                        </h3>
+                                        <h3 className="text-white text-2xl font-bold">{textoTrailer}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -286,72 +240,55 @@ export const DetallePelicula = () => {
                         {/* Sinopsis */}
                         <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/50">
                             <h3 className="text-white text-2xl font-bold mb-4">Sinopsis</h3>
-                            <p className="text-gray-300 leading-relaxed">
-                                {sinopsis}
-                            </p>
+                            <p className="text-gray-300">{sinopsis}</p>
                         </div>
 
                         {/* Director */}
                         <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/50">
                             <h3 className="text-white text-2xl font-bold mb-4">Director</h3>
-                            <p className="text-gray-300">
-                                {director}
-                            </p>
+                            <p className="text-gray-300">{director}</p>
                         </div>
 
                         {/* Reparto */}
                         <div className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-6 border border-slate-700/50">
                             <h3 className="text-white text-2xl font-bold mb-4">Reparto</h3>
-                            <p className="text-gray-300">
-                                {reparto}
-                            </p>
+                            <p className="text-gray-300">{reparto}</p>
                         </div>
 
-                        {/* Reseñas - móvil */}
+                        {/* Reseñas móvil */}
                         <div className="space-y-4 lg:hidden">
                             {resenas.slice(0, 3).map((resena) => (
-                                <div
-                                    key={resena.id}
-                                    className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-5 border border-slate-700/50"
-                                >
+                                <div key={resena.id} className="bg-slate-800/30 backdrop-blur-sm rounded-3xl p-5 border border-slate-700/50">
                                     <div className="flex items-start gap-3 mb-3">
                                         <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-slate-600 flex-shrink-0">
-                                            <img
-                                                src={resena.avatar}
-                                                alt={resena.usuario}
-                                                className="w-full h-full object-cover"
-                                            />
+                                            <img src={resena.avatar} alt={resena.usuario} className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1">
                                             <p className="text-white font-bold text-sm mb-1">{resena.usuario}</p>
                                             {renderStars(resena.rating)}
                                         </div>
                                     </div>
-                                    <p className="text-gray-300 text-sm leading-relaxed">
-                                        {resena.texto}
-                                    </p>
+                                    <p className="text-gray-300 text-sm">{resena.texto}</p>
                                 </div>
                             ))}
                         </div>
 
-                        {/* Botón Reseñas - móvil */}
-                        <button 
+                        <button
                             onClick={() => setShowAllReviews(true)}
-                            className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-full transition-all duration-300 shadow-lg shadow-red-500/30 hover:shadow-xl hover:shadow-red-500/40 transform hover:scale-105 text-xl lg:hidden"
+                            className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-full transition-all duration-300 shadow-lg hover:scale-105 text-xl lg:hidden"
                         >
                             Leer más reseñas
                         </button>
                     </div>
                 </div>
 
-                {/* Modal del Trailer de YouTube */}
+                {/* Modal Trailer */}
                 {showTrailer && videoId && (
-                    <div 
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4" 
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
                         onClick={() => setShowTrailer(false)}
                     >
-                        <div 
-                            className="relative w-full max-w-5xl aspect-video animate-scaleIn" 
+                        <div
+                            className="relative w-full max-w-5xl aspect-video animate-scaleIn"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <button
@@ -372,11 +309,16 @@ export const DetallePelicula = () => {
                     </div>
                 )}
 
-                {/* Modal de todas las reseñas */}
+                {/* Modal Reseñas */}
                 {showAllReviews && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onClick={() => setShowAllReviews(false)}>
-                        <div className="bg-slate-800 rounded-3xl shadow-2xl border border-slate-700 max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col animate-scaleIn" onClick={(e) => e.stopPropagation()}>
-                            <div className="p-6 border-b border-slate-700 flex items-center justify-between flex-shrink-0">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+                         onClick={() => setShowAllReviews(false)}
+                    >
+                        <div
+                            className="bg-slate-800 rounded-3xl shadow-2xl border border-slate-700 max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col animate-scaleIn"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="p-6 border-b border-slate-700 flex items-center justify-between">
                                 <h2 className="text-2xl font-bold text-white">Todas las Reseñas</h2>
                                 <button
                                     onClick={() => setShowAllReviews(false)}
@@ -388,26 +330,17 @@ export const DetallePelicula = () => {
 
                             <div className="overflow-y-auto p-6 space-y-4 flex-1">
                                 {resenas.map((resena) => (
-                                    <div
-                                        key={resena.id}
-                                        className="bg-slate-700/30 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50"
-                                    >
+                                    <div key={resena.id} className="bg-slate-700/30 backdrop-blur-sm rounded-2xl p-6 border border-slate-600/50">
                                         <div className="flex items-start gap-4 mb-3">
-                                            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-slate-500 flex-shrink-0">
-                                                <img
-                                                    src={resena.avatar}
-                                                    alt={resena.usuario}
-                                                    className="w-full h-full object-cover"
-                                                />
+                                            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-slate-500">
+                                                <img src={resena.avatar} alt={resena.usuario} className="w-full h-full object-cover" />
                                             </div>
                                             <div className="flex-1">
                                                 <p className="text-white font-bold text-lg mb-1">{resena.usuario}</p>
                                                 {renderStars(resena.rating)}
                                             </div>
                                         </div>
-                                        <p className="text-gray-300 leading-relaxed">
-                                            {resena.texto}
-                                        </p>
+                                        <p className="text-gray-300">{resena.texto}</p>
                                     </div>
                                 ))}
                             </div>
@@ -418,16 +351,9 @@ export const DetallePelicula = () => {
 
             <style jsx>{`
                 @keyframes scaleIn {
-                    from { 
-                        transform: scale(0.95);
-                        opacity: 0;
-                    }
-                    to { 
-                        transform: scale(1);
-                        opacity: 1;
-                    }
+                    from { transform: scale(0.95); opacity: 0; }
+                    to { transform: scale(1); opacity: 1; }
                 }
-                
                 .animate-scaleIn {
                     animation: scaleIn 0.2s ease-out;
                 }
