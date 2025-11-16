@@ -3,14 +3,16 @@ import './App.css';
 import Header from './Component/Header';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import IniciarSesion from './Component/IniciarSesion';
+import MenuPrincipal from './Component/MenuPrincipal';
+import Registro from './Component/Registro';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<IniciarSesion />} />
-        <Route path="/menuPrincipal" element={<IniciarSesion />} />
-        <Route path="/registro" element={<IniciarSesion />} />
+        <Route path="/menuPrincipal" element={<MenuPrincipal />} />
+        <Route path="/registro" element={<Registro />} />
       </Routes>
     </Router>
   );
